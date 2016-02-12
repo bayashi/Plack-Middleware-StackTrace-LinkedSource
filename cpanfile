@@ -8,6 +8,8 @@ requires 'Plack::Util::Accessor';
 
 on 'test' => sub {
     requires 'Test::More', '0.88';
+    requires 'HTTP::Request::Common';
+    requires 'Plack::Test';
 };
 
 on 'configure' => sub {
