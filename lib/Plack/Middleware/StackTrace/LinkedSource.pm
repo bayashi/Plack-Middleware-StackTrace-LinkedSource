@@ -1,18 +1,76 @@
 package Plack::Middleware::StackTrace::LinkedSource;
 use strict;
 use warnings;
-use Carp qw/croak/;
+use parent 'Plack::Middleware::StackTrace';
+use Plack::App::SourceViewer;
+use Plack::Util::Accessor qw/
+    lib
+    viewer
+    view_root
+/;
 
 our $VERSION = '0.01';
 
-sub new {
-    my $class = shift;
-    my $args  = shift || +{};
+sub prepare_app {
+    my ($self) = @_;
 
-    bless $args, $class;
+    if (!$self->lib) {
+        $self->lib([@INC]);
+    }
+    elsif (ref $self->lib ne 'ARRAY') {
+        $self->lib([$self->lib]);
+    }
+
+    unless ($self->viewer) {
+        my $source_viewer = Plack::App::SourceViewer->new(root => $self->lib);
+        $source_viewer->prepare_app;
+        $self->viewer($source_viewer);
+    }
+
+    $self->view_root
+        or $self->view_root('/source');
+}
+
+sub call {
+    my($self, $env) = @_;
+
+    my $path = $self->view_root;
+
+    if ($env->{PATH_INFO} =~ m!^$path!) {
+        my $path_info = $env->{PATH_INFO};
+        $path_info =~ s!^$path/!!;
+        local $env->{PATH_INFO} = $path_info;
+        return $self->viewer->call($env);
+    }
+
+    my $res = $self->SUPER::call($env);
+
+    if ($res->[0] == 500 && Plack::Util::header_get($res->[1], 'content-type') =~ m!text/html!) {
+        my $body = $res->[2][0];
+        $self->_add_link(\$body);
+        $res->[2][0] = $body;
+    }
+
+    return $res;
+}
+
+sub _add_link {
+    my ($self, $body_ref) = @_;
+
+    for my $lib_path (@{$self->lib}) {
+        next if $lib_path !~ m!^/!;
+        ${$body_ref} =~ s!($lib_path/([^\.]+\.[^\s]+)\s+line\s+(\d+))!_link_html($1, $2, $3)!eg;
+    }
+}
+
+sub _link_html {
+    my ($matched, $path, $line_count) = @_;
+
+    return qq|<a href="/source/$path#L$line_count">$matched</a>|;
 }
 
 1;
+
 
 __END__
 
@@ -20,17 +78,43 @@ __END__
 
 =head1 NAME
 
-Plack::Middleware::StackTrace::LinkedSource - one line description
+Plack::Middleware::StackTrace::LinkedSource - Adding links to library source codes in stacktrace
 
 
 =head1 SYNOPSIS
 
-    use Plack::Middleware::StackTrace::LinkedSource;
+    enable 'StackTrace::LinkedSource';
 
 
 =head1 DESCRIPTION
 
-Plack::Middleware::StackTrace::LinkedSource is
+Plack::Middleware::StackTrace::LinkedSource provides stacktrace which includes links to library source code.
+
+NOTE that B<you should turn off this middleware in the production environment>.
+
+
+=head1 MIDDLEWARE CONFIGURATION
+
+=head2 lib => ($lib || \@lib) //  [@INC]
+
+library path
+
+=head2 viewer => $code_ref_for_plack // Plack::App::SourceViewer instance
+
+source code viewer instance
+
+=head2 view_root => $view_root // '/source'
+
+root of source code path
+
+see more configurations on L<Plack::Middleware::StackTrace>
+
+
+=head1 METHODS
+
+=head2 prepare_app
+
+=head2 call
 
 
 =head1 REPOSITORY
@@ -53,7 +137,9 @@ Dai Okabayashi E<lt>bayashi@cpan.orgE<gt>
 
 =head1 SEE ALSO
 
-L<Other::Module>
+L<Plack::Middleware::StackTrace>
+
+L<Plack::App::SourceViewer>
 
 
 =head1 LICENSE
