@@ -1,0 +1,4 @@
+Revision history for Perl extension Plack::Middleware::StackTrace::LinkedSource
+
+0.01    Fri Feb 12 10:44:47 JST 2016
+        - original version
