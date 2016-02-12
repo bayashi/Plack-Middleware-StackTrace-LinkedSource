@@ -84,7 +84,7 @@ Plack::Middleware::StackTrace::LinkedSource - Adding links to library source cod
 
 =head1 SYNOPSIS
 
-    enable 'StackTrace::LinkedSource';
+    enable 'StackTrace::LinkedSource', lib => ['/your/project/lib', @INC];
 
 
 =head1 DESCRIPTION
