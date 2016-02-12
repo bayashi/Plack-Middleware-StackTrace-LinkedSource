@@ -1,7 +1,10 @@
 requires 'perl', '5.008005';
 requires 'strict';
 requires 'warnings';
-requires 'Carp';
+requires 'Plack::Middleware::StackTrace';
+requires 'Plack::App::SourceViewer';
+requires 'Plack::Util';
+requires 'Plack::Util::Accessor';
 
 on 'test' => sub {
     requires 'Test::More', '0.88';

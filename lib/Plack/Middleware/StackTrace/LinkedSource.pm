@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use parent 'Plack::Middleware::StackTrace';
 use Plack::App::SourceViewer;
+use Plack::Util;
 use Plack::Util::Accessor qw/
     lib
     viewer
