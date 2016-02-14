@@ -23,7 +23,7 @@ use Plack::Middleware::StackTrace::LinkedSource;
         ok $res->is_error;
         is_deeply [ $res->content_type ], [ 'text/html', 'charset=utf-8' ];
         like $res->content, qr/<title>Error: orz/;
-        like $res->content, qr!<a href="/source/Plack/Component\.pm\#L\d+">/.+/Plack/Component\.pm line \d+</a>!;
+        like $res->content, qr!<a href="[/\\]source[/\\]Plack[/\\]Component\.pm\#L\d+">[/\\].+[/\\]Plack[/\\]Component\.pm line \d+</a>!;
     }
 }
 
