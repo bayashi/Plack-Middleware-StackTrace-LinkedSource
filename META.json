@@ -48,7 +48,7 @@
    "provides" : {
       "Plack::Middleware::StackTrace::LinkedSource" : {
          "file" : "lib/Plack/Middleware/StackTrace/LinkedSource.pm",
-         "version" : "0.03"
+         "version" : "0.04"
       }
    },
    "release_status" : "stable",
@@ -67,6 +67,6 @@
          "web" : "http://webchat.freenode.net/?channels=%23bayadev"
       }
    },
-   "version" : "0.03",
+   "version" : "0.04",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }
