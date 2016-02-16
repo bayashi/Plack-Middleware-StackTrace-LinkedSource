@@ -59,7 +59,7 @@ sub _add_link {
     my ($self, $body_ref) = @_;
 
     for my $lib_path (@{$self->lib}) {
-        next if $lib_path !~ m!^/!;
+        next if $lib_path eq '.';
         ${$body_ref} =~ s!(\Q$lib_path\E[/\\]([^\.]+\.[^\s]+)\s+line\s+(\d+))!_link_html($1, $2, $3)!eg;
     }
 }
