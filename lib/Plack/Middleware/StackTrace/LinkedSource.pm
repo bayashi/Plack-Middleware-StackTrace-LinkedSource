@@ -67,6 +67,8 @@ sub _add_link {
 sub _link_html {
     my ($matched, $path, $line_count) = @_;
 
+    $path =~ s!\\!/!g; # for win
+
     return qq|<a href="/source/$path#L$line_count">$matched</a>|;
 }
 
