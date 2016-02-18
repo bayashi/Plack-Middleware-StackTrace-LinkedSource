@@ -23,7 +23,7 @@ use Plack::Middleware::StackTrace::LinkedSource;
         ok $res->is_error;
         is_deeply [ $res->content_type ], [ 'text/html', 'charset=utf-8' ];
         like $res->content, qr/<title>Error: orz/;
-        like $res->content, qr!<a href="/source/Plack/Component\.pm\#L\d+">[/\\].+[/\\]Plack[/\\]Component\.pm line \d+</a>!;
+        like $res->content, qr!<a href="/source/Try/Tiny\.pm\#L\d+">[/\\].+[/\\]Try[/\\]Tiny\.pm line \d+</a>!;
     }
 }
 
@@ -36,9 +36,9 @@ use Plack::Middleware::StackTrace::LinkedSource;
     test_psgi $app, sub {
         my $cb = shift;
 
-        my $res = $cb->(GET "/source/Plack/Component.pm");
+        my $res = $cb->(GET "/source/Try/Tiny.pm");
         is $res->code, 200;
-        like $res->content, qr!<title>Plack/Component\.pm!;
+        like $res->content, qr!<title>Try/Tiny\.pm!;
     }
 }
 
