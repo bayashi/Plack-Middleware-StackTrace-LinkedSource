@@ -1,5 +1,9 @@
 Revision history for Perl extension Plack::Middleware::StackTrace::LinkedSource
 
+0.06    Thu Feb 18 21:11:11 JST 2016
+        - fix path regexp
+        - change the module name for testing
+
 0.05    Thu Feb 18 12:36:39 JST 2016
         - convert file path delimitor for windows
 
