@@ -1,5 +1,8 @@
 Revision history for Perl extension Plack::Middleware::StackTrace::LinkedSource
 
+0.05    Thu Feb 18 12:36:39 JST 2016
+        - convert file path delimitor for windows
+
 0.04    Tue Feb 16 17:40:17 JST 2016
         - ignore lib path '.'
 
