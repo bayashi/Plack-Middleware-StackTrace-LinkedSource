@@ -60,7 +60,8 @@ sub _add_link {
 
     for my $lib_path (@{$self->lib}) {
         next if $lib_path eq '.';
-        ${$body_ref} =~ s!(\Q$lib_path\E[/\\]([^\.]+\.[^\s]+)\s+line\s+(\d+))!_link_html($1, $2, $3)!eg;
+        $lib_path =~ s!/!\\!g if $^O eq 'MSWin32';
+        ${$body_ref} =~ s!(\Q$lib_path\E[/\\]+([^\.]+\.[^\s]+)\s+line\s+(\d+))!_link_html($1, $2, $3)!eg;
     }
 }
 
