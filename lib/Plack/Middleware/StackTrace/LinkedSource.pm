@@ -101,8 +101,6 @@ Plack::Middleware::StackTrace::LinkedSource - Adding links to library source cod
 
 Plack::Middleware::StackTrace::LinkedSource provides stacktrace which includes links to library source code.
 
-NOTE that B<you should turn off this middleware in the production environment>.
-
 
 =head1 MIDDLEWARE CONFIGURATION
 
