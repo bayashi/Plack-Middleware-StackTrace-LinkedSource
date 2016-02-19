@@ -8,6 +8,7 @@ use Plack::Util::Accessor qw/
     lib
     viewer
     view_root
+    force
 /;
 
 our $VERSION = '0.08';
@@ -30,10 +31,16 @@ sub prepare_app {
 
     $self->view_root
         or $self->view_root('/source');
+
+    $self->{_enabled} = ($self->force || !$ENV{PLACK_ENV} || $ENV{PLACK_ENV} eq 'development');
 }
 
 sub call {
     my($self, $env) = @_;
+
+    unless ($self->{_enabled}) {
+        return $self->app->($env);
+    }
 
     my $path = $self->view_root;
 
@@ -110,6 +117,10 @@ source code viewer instance
 =head2 view_root => $view_root // '/source'
 
 root of source code path
+
+=head2 force => $bool // undef
+
+Force display the stack trace when an error occurs within your application and the response code from your application is 500. Defaults to off. By default, stack trace is showed under 'development' or no environment($ENV{PLACK_ENV}).
 
 see more configurations on L<Plack::Middleware::StackTrace>
 
