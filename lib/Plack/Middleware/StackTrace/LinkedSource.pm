@@ -11,7 +11,7 @@ use Plack::Util::Accessor qw/
     force
 /;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 sub prepare_app {
     my ($self) = @_;
@@ -134,7 +134,7 @@ see more configurations on L<Plack::Middleware::StackTrace>
 
 =begin html
 
-<a href="http://travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://secure.travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource.png?_t=1455890721"/></a> <a href="https://coveralls.io/r/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://coveralls.io/repos/bayashi/Plack-Middleware-StackTrace-LinkedSource/badge.png?_t=1455890721&branch=master"/></a>
+<a href="http://travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://secure.travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource.png?_t=1455891143"/></a> <a href="https://coveralls.io/r/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://coveralls.io/repos/bayashi/Plack-Middleware-StackTrace-LinkedSource/badge.png?_t=1455891143&branch=master"/></a>
 
 =end html
 
