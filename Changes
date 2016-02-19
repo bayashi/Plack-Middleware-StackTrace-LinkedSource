@@ -1,5 +1,9 @@
 Revision history for Perl extension Plack::Middleware::StackTrace::LinkedSource
 
+0.09    Fri Feb 19 22:59:41 JST 2016
+        - add force option
+            (If you did not set force option, stack trace would hide in production environment automatically.)
+
 0.08    Fri Feb 19 16:09:22 JST 2016
         - fix for windows again
 
