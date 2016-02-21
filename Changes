@@ -1,5 +1,8 @@
 Revision history for Perl extension Plack::Middleware::StackTrace::LinkedSource
 
+0.11    Sun Feb 21 16:50:44 JST 2016
+        - enhanced POD
+
 0.10    Fri Feb 19 23:08:49 JST 2016
         - fix POD(remove one line only)
 
