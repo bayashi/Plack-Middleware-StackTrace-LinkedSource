@@ -120,6 +120,8 @@ root of source code path
 
 Force display the stack trace when an error occurs within your application and the response code from your application is 500. Defaults to off. By default, stack trace is showed under 'development' or no environment($ENV{PLACK_ENV}).
 
+B<NOTE>: This middleware pretends to do nothing in production environment without the force option. However, already have been loaded whether it is enable or not. If you wanted to avoid loading this module, you should turn off it by yourself.
+
 see more configurations on L<Plack::Middleware::StackTrace>
 
 
