@@ -104,23 +104,27 @@ Plack::Middleware::StackTrace::LinkedSource provides stacktrace which includes l
 
 =head1 MIDDLEWARE CONFIGURATION
 
-=head2 lib => ($lib || \@lib) //  [@INC]
+=over
+
+=item B< lib => ($lib || \@lib) > //  C< [@INC] >
 
 library path
 
-=head2 viewer => $code_ref_for_plack // Plack::App::SourceViewer instance
+=item B< viewer => $code_ref_for_plack > // C< Plack::App::SourceViewer instance >
 
 source code viewer instance
 
-=head2 view_root => $view_root // '/source'
+=item B< view_root => $view_root > // C< '/source' >
 
 root of source code path
 
-=head2 force => $bool // undef
+=item B< force => $bool > // C< undef >
 
 Force display the stack trace when an error occurs within your application and the response code from your application is 500. Defaults to off. By default, stack trace is showed under 'development' or no environment($ENV{PLACK_ENV}).
 
 B<NOTE>: This middleware pretends to do nothing in production environment without the force option. However, already have been loaded whether it is enable or not. If you wanted to avoid loading this module, you should turn off it by yourself.
+
+=back
 
 see more configurations on L<Plack::Middleware::StackTrace>
 
