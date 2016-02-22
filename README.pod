@@ -5,7 +5,7 @@ This is Perl module B<Plack::Middleware::StackTrace::LinkedSource>.
 
 =begin html
 
-<a href="http://travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://secure.travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource.png?_t=1456041087"/></a> <a href="https://coveralls.io/r/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://coveralls.io/repos/bayashi/Plack-Middleware-StackTrace-LinkedSource/badge.png?_t=1456041087&branch=master"/></a>
+<a href="http://travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://secure.travis-ci.org/bayashi/Plack-Middleware-StackTrace-LinkedSource.png?_t=1456124185"/></a> <a href="https://coveralls.io/r/bayashi/Plack-Middleware-StackTrace-LinkedSource"><img src="https://coveralls.io/repos/bayashi/Plack-Middleware-StackTrace-LinkedSource/badge.png?_t=1456124185&branch=master"/></a>
 
 =end html
 
