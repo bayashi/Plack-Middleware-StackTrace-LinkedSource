@@ -6,6 +6,7 @@ use Plack::Test;
 
 use Plack::Middleware::StackTrace::LinkedSource;
 
+my $source_path;
 {
     my $traceapp = Plack::Middleware::StackTrace::LinkedSource->wrap(sub { die "orz" }, no_print_errors => 1);
     my $app = sub {
@@ -24,6 +25,8 @@ use Plack::Middleware::StackTrace::LinkedSource;
         is_deeply [ $res->content_type ], [ 'text/html', 'charset=utf-8' ];
         like $res->content, qr/<title>Error: orz/;
         like $res->content, qr!<a href="/source/(.+/)?Try/Tiny\.pm\#L\d+">.+[/\\]Try[/\\]Tiny\.pm line \d+</a>!;
+        ($source_path) = ($res->content =~ m!<a href="(/source/[^\.]+\.pm)\#L\d+">!);
+        ok $source_path and note $source_path;
     }
 }
 
@@ -36,9 +39,9 @@ use Plack::Middleware::StackTrace::LinkedSource;
     test_psgi $app, sub {
         my $cb = shift;
 
-        my $res = $cb->(GET "/source/Try/Tiny.pm");
+        my $res = $cb->(GET $source_path);
         is $res->code, 200;
-        like $res->content, qr!<title>Try/Tiny\.pm!;
+        like $res->content, qr!<title>[^\.]+\.pm!;
     }
 }
 
