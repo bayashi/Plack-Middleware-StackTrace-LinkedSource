@@ -1,5 +1,8 @@
 Revision history for Perl extension Plack::Middleware::StackTrace::LinkedSource
 
+0.13    Sun Mar 13 18:34:49 JST 2016
+        - fix regexp(do not use this module before ver 0.12, it's broken)
+
 0.12    Mon Feb 22 15:55:51 JST 2016
         - fix broken tests
         - tiny fix
