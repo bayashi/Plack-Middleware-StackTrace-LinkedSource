@@ -88,4 +88,43 @@ my $source_path;
     }
 }
 
+my $other_source_path;
+{
+    my $traceapp = Plack::Middleware::StackTrace::LinkedSource->wrap(sub { die "orz" }, no_print_errors => 1, view_root => '/view_source');
+    my $app = sub {
+        my $env = shift;
+        my $ret = $traceapp->($env);
+        return $ret;
+    };
+    test_psgi $app, sub {
+        my $cb = shift;
+
+        my $req = GET "/";
+        $req->header(Accept => "text/html,*/*");
+        my $res = $cb->($req);
+
+        ok $res->is_error;
+        is_deeply [ $res->content_type ], [ 'text/html', 'charset=utf-8' ];
+        like $res->content, qr/<title>Error: orz/;
+        like $res->content, qr!<a href="/view_source/(.+/)?Try/Tiny\.pm\#L\d+">.+[/\\]Try[/\\]Tiny\.pm line \d+</a>!;
+        ($other_source_path) = ($res->content =~ m!<a href="(/view_source/[^\.]+\.pm)\#L\d+">!);
+        ok $other_source_path and note $other_source_path;
+    }
+}
+
+{
+    my $sourceapp = Plack::Middleware::StackTrace::LinkedSource->wrap(sub { [200, [], ["OK"]] }, view_root => '/view_source');
+    my $app = sub {
+        my $env = shift;
+        return $sourceapp->($env);
+    };
+    test_psgi $app, sub {
+        my $cb = shift;
+
+        my $res = $cb->(GET $other_source_path);
+        is $res->code, 200;
+        like $res->content, qr!<title>[^\.]+\.pm!;
+    }
+}
+
 done_testing;

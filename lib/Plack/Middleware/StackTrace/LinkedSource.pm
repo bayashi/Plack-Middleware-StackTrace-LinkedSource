@@ -68,16 +68,16 @@ sub _add_link {
     for my $lib_path (@{$self->lib}) {
         next if $lib_path eq '.';
         $lib_path =~ s!/!\\!g if $^O eq 'MSWin32';
-        ${$body_ref} =~ s!(\Q$lib_path\E[/\\]+([^\.]+\.[^\s]+)\s+line\s+(\d+))[^<]?!_link_html($1, $2, $3)!eg;
+        ${$body_ref} =~ s!(\Q$lib_path\E[/\\]+([^\.]+\.[^\s]+)\s+line\s+(\d+))[^<]?!$self->_link_html($1, $2, $3)!eg;
     }
 }
 
 sub _link_html {
-    my ($matched, $path, $line_count) = @_;
+    my ($self, $matched, $path, $line_count) = @_;
 
     $path =~ s!\\!/!g; # for win
 
-    return qq|<a href="/source/$path#L$line_count">$matched</a>|;
+    return qq|<a href="|. $self->view_root. qq|/$path#L$line_count">$matched</a>|;
 }
 
 1;
